@@ -20,6 +20,7 @@ is much larger for the Mess-UP model (around 500).
 import numpy as np
 import matplotlib.pyplot as plt
 from pymbar import MBAR
+import sys
 
 # Physical constants
 N_A = 6.02214086e23 #[/mol]
@@ -80,7 +81,7 @@ elif new_state == 2:
         
 else:
     
-    exit         
+    sys.exit('Model value must be either 1 or 2')        
 
 # Assign variables to specific values from gromacs output
 U_01 = Up_01[:,1] + Up_01[:,2]
