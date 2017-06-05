@@ -66,7 +66,7 @@ U_00 = Up_00[:,1] + Up_00[:,2] #[kJ/mol]
 P_00 = Up_00[:,4] + Up_00[:,5]  #[bar]
 pV_00 = V * P_00 * bar_nm3_to_kJ_per_mole #[kJ/mol]
 
-new_state = 1 # 1=Potoff, 2=Mess-UP
+new_state = raw_input("For which model would you like to predict the internal energy? 1- Potoff, 2-Mess-UP \n")
 
 if new_state == 1:
     
