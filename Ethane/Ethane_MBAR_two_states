@@ -50,7 +50,7 @@ eps_2 = 98.5 #[K]
 sig_2 = 0.375 #[nm]
 lam_2 = 12.
 
-def U_to_u(U,pV):
+def U_to_u(U,pV): #Converts internal energy, pressure, volume, and temperature into reduced potential energy
     u = beta*(U + pV)
     return u
 
