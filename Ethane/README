@@ -1,6 +1,6 @@
-Ethane_MBAR is designed to test how well MBAR predicts internal energy for the Potoff and Mess-UP potentials 
-given simulation results from the TraPPE potential. The TraPPE and Mess-UP models represent 
-an example of very good phase space overlap as they are very similar LJ models.
+Ethane_MBAR is designed to test how well MBAR predicts internal energy for the Potoff and Mess-UP
+potentials given simulation results from the TraPPE potential. The TraPPE and Mess-UP models
+represent an example of very good phase space overlap as they are very similar LJ models.
 The Potoff model has very poor phase space overlap having a different value
 of sigma and a repulsive exponent of 16. 
 
