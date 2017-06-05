@@ -14,3 +14,8 @@ In addition, it is unclear why the prediction of U from MBAR for the Mess-UP
 model is worse than just rerunning the simulation (again, a weighting of 1 for
 all configurations). This is surprising as the number of effective samples
 is much larger for the Mess-UP model (around 500).
+
+Note that the energyi_j.txt files must be in the same directory.
+
+Also, the user must provide the desired state at which the internal energies will be
+predicted. Provide a value of 1 for Potoff and 2 for Mess-UP.
