@@ -51,7 +51,8 @@ sig_2 = 0.375 #[nm]
 lam_2 = 12.
 
 def U_to_u(U,pV): #Converts internal energy, pressure, volume, and temperature into reduced potential energy
-    u = beta*(U + pV)
+    #u = beta*(U + pV)
+    u = beta*U # Michael said that for NVE the Boltzmann weight is just beta*U
     return u
 
 # Import the potential energies and pressures for the different mdruns and reruns
