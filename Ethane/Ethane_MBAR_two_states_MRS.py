@@ -96,6 +96,7 @@ u_22 = U_to_u(U_11,pV_22)
 
 # Using just the Model 0 mdrun samples
 N_k = np.array([len(u_00),0,0]) # The number of samples from the two states
+
 u_kn = np.array([u_00,u_01,u_02])
 U_kn = U_00
 
@@ -209,5 +210,25 @@ dEA_scaled = np.std(U_01)/np.sqrt(N_eff-1)
 
 print "Estimator scaled for N_eff = 5% of total samples: {:10.3f}+/-{:10.3f}".format(EA_scaled, dEA_scaled)
 
+#MRS: Now do bootstrapping for errors.
+Nboots = 2000  # you can get pretty close with N=200
+EAb = np.zeros([3,Nboots])
+dEAb = np.zeros([3,Nboots])
+rand_select = np.random.randint(0,N_k[0],size=[N_k[0],Nboots])
 
+for n in range(Nboots):
+    u_kn = np.array([u_00[rand_select[:,n]],u_01[rand_select[:,n]],u_02[rand_select[:,n]]])
+    mbar = MBAR(u_kn,N_k)
+    (Deltaf_ij, dDeltaf_ij, Theta_ij) = mbar.getFreeEnergyDifferences(return_theta=True)
+    for i in range(3):
+        tmpa, tmpb = mbar.computeExpectations(u_kn[0,:]) # potential energy of i, estimated in state 0:2 (sampled from just 0)
+        (EAb[i,n], dEAb[i,n]) = (tmpa[i]/beta,tmpb[i]/beta) 
 
+print "Value /   +/-   Bootstrapped uncertainty vs analytical uncertainty"
+for i in range(3):
+    print "    MBAR estimate for U =  {:10.3f} +/- {:10.3f} vs {:10.3f}".format(EA[i],np.std(EAb[i,:]),dEA[i])
+# pretty good analytical estimates for 0 and 2 (not surprising since N_eff is near N!  Sample run I get:
+#    MBAR estimate for U =   -5522.483 +/-      0.868 vs      0.873
+#    MBAR estimate for U =   -5876.616 +/-      4.604 vs      0.002
+#    MBAR estimate for U =   -5554.139 +/-      0.881 vs      0.889
+ 
