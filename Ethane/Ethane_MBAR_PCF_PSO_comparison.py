@@ -4,17 +4,6 @@ just for the initial model (TraPPE). The TraPPE and Mess-UP models represent
 an example of very good phase space overlap as they are very similar LJ models.
 The Potoff model has very poor phase space overlap having a different value
 of sigma and a repulsive exponent of 16. 
-
-The primary conclusion is that for Potoff the number of effective samples is
-around 1, which explains the poor prediction for MBAR. However, when using
-"MBAR_alt" the prediction is better than "MBAR" and just rerunning the simulation
-(i.e. a weighting of 1 for all configurations). The question is, is MBAR or
-MBAR_alt the correct implementation of MBAR?
-
-In addition, it is unclear why the prediction of U from MBAR for the Mess-UP 
-model is worse than just rerunning the simulation (again, a weighting of 1 for
-all configurations). This is surprising as the number of effective samples
-is much larger for the Mess-UP model (around 500).
 """
 
 import numpy as np
