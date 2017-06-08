@@ -226,7 +226,7 @@ for n in range(Nboots):
 
 print "Value /   +/-   Bootstrapped uncertainty vs analytical uncertainty"
 for i in range(3):
-    print "    MBAR estimate for U =  {:10.3f} +/- {:10.3f} vs {:10.3f}".format(EA[i],np.std(EAb[i,:]),dEA[i])
+    print "    MBAR estimate for U in state {:d} =  {:10.3f} +/- {:10.3f} vs {:10.3f}".format(i,EA[i],np.std(EAb[i,:]),dEA[i])
 # pretty good analytical estimates for 0 and 2 (not surprising since N_eff is near N!  Sample run I get:
 #    MBAR estimate for U =   -5522.483 +/-      0.868 vs      0.873
 #    MBAR estimate for U =   -5876.616 +/-      4.604 vs      0.002
