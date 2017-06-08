@@ -248,3 +248,40 @@ for i in range(3):
 #    MBAR estimate for U =   -5876.616 +/-      4.604 vs      0.002
 #    MBAR estimate for U =   -5554.139 +/-      0.881 vs      0.889
  
+# Plot the predicted RDF for Potoff
+
+RDF_0_Temp_ref = RDF_0(U_Mie(r,eps_0,sig_0,lam_0),Temp)
+RDF_0_Temp = RDF_0(U_Mie(r,eps_1,sig_1,lam_1),Temp)
+RDF_predicted_zeroth = RDF_hat_calc(RDF_ref,RDF_0_Temp_ref,RDF_0_Temp)
+RDF_0_Temp_scaled = RDF_0(U_Mie(r_plus_ref*sig_1,eps_1,sig_1,lam_1),Temp)
+RDF_scaled_predicted_zeroth = RDF_hat_calc(RDF_ref,RDF_0_Temp_ref,RDF_0_Temp_scaled)
+
+plt.plot(r,RDF_predicted_zeroth,label='Predicted Zeroth Potoff')
+plt.plot(r_plus_ref*sig_1,RDF_scaled_predicted_zeroth,label='Scaled Predicted Zeroth Potoff')
+plt.plot(r,RDF_ref,label='Reference (TraPPE)')
+plt.plot(r_1,RDF_1,label='Actual Potoff')
+plt.legend()
+plt.xlabel('r (nm)')
+plt.ylabel('PCF')
+plt.show()
+
+plt.plot(r,RDF_predicted_zeroth,label='Predicted Zeroth Potoff')
+plt.plot(r_plus_ref*sig_1,RDF_scaled_predicted_zeroth,label='Scaled Predicted Zeroth Potoff')
+plt.plot(r,RDF_ref,label='Reference (TraPPE)')
+plt.plot(r_1,RDF_1,label='Actual Potoff')
+plt.legend()
+plt.xlabel('r (nm)')
+plt.ylabel('PCF')
+plt.xlim([0.3,0.45])
+plt.show()
+
+plt.plot(r,RDF_predicted_zeroth,label='Predicted Zeroth Potoff')
+plt.plot(r_plus_ref*sig_1,RDF_scaled_predicted_zeroth,label='Scaled Predicted Zeroth Potoff')
+plt.plot(r,RDF_ref,label='Reference (TraPPE)')
+plt.plot(r_1,RDF_1,label='Actual Potoff')
+plt.legend()
+plt.xlabel('r (nm)')
+plt.ylabel('PCF')
+plt.xlim([0.4,1.4])
+plt.ylim([0.5,1.5])
+plt.show()
