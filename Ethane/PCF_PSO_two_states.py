@@ -124,6 +124,10 @@ def U_Mie(r, e_over_k, sigma, n = 12., m = 6.):
     U[U>1e10] = 1e10 # No need to store extremely large values of U that can lead to overflow
     return U
 
+def r_min_calc_Mie(sig, n=12., m=6.):
+    r_min = (n/m*sig**(n-m))**(1./(n-m))
+    return r_min
+
 def U_Corr_Mie(e_over_k, sigma, r_c, n = 12., m = 6.): #I need to correct this for m != 6
     C = (n/(n-m))*(n/m)**(m/(n-m)) # The normalization constant for the Mie potential
     #U = C*e_over_k*((1./(n-3))*r_c_plus**(3-n) - (1./3) * r_c_plus **(-3))*sigma**3 #[K * nm^3]
@@ -146,7 +150,7 @@ def U_hat_Mie(eps_pred,sig_pred,lam_pred,method,RDF_ref,RDF_0_Temp_ref,r_ref=r,s
         RDF = RDF_ref
         U_hat = U_total_Mie(r,eps_pred,sig_pred,r_c,RDF,dr,lam_pred) # Constant r_plus
         
-    elif method == 1: # Assumes constant r*,RDF
+    elif method == 1: # Assumes constant r* with respect to sigma,RDF
         
         RDF = RDF_ref
         U_hat = U_total_Mie(r_plus_ref*sig_pred,eps_pred,sig_pred,r_c_plus_ref*sig_pred,RDF,dr_plus_ref*sig_pred,lam_pred) # Constant r_plus
@@ -157,11 +161,24 @@ def U_hat_Mie(eps_pred,sig_pred,lam_pred,method,RDF_ref,RDF_0_Temp_ref,r_ref=r,s
         RDF = RDF_hat_calc(RDF_ref,RDF_0_Temp_ref,RDF_0_Temp)
         U_hat = U_total_Mie(r,eps_pred,sig_pred,r_c,RDF,dr,lam_pred) # Constant r_plus
     
-    elif method == 3: # Assumes constant r*, predicts the zeroth order RDF
+    elif method == 3: # Assumes constant r* with respect to sigma, predicts the zeroth order RDF
     
         RDF_0_Temp = RDF_0(U_Mie(r_plus_ref*sig_pred,eps_pred,sig_pred,lam_pred),Temp)
         RDF = RDF_hat_calc(RDF_ref,RDF_0_Temp_ref,RDF_0_Temp)
         U_hat = U_total_Mie(r_plus_ref*sig_pred,eps_pred,sig_pred,r_c_plus_ref*sig_pred,RDF,dr_plus_ref*sig_pred,lam_pred) # Constant r_plus
+    
+    elif method == 5: # Assumes constant r* with respect to rmin,RDF
+        
+        r_min_pred = r_min_calc_Mie(sig_pred,lam_pred)
+        RDF = RDF_ref
+        U_hat = U_total_Mie(r_plus_ref*r_min_pred,eps_pred,sig_pred,r_c_plus_ref*r_min_pred,RDF,dr_plus_ref*r_min_pred,lam_pred) # Constant r_plus
+     
+    elif method == 6: # Assumes constant r* with respect to rmin, predicts the zeroth order RDF
+    
+        r_min_pred = r_min_calc_Mie(sig_pred,lam_pred)
+        RDF_0_Temp = RDF_0(U_Mie(r_plus_ref*r_min_pred,eps_pred,sig_pred,lam_pred),Temp)
+        RDF = RDF_hat_calc(RDF_ref,RDF_0_Temp_ref,RDF_0_Temp)
+        U_hat = U_total_Mie(r_plus_ref*r_min_pred,eps_pred,sig_pred,r_c_plus_ref*r_min_pred,RDF,dr_plus_ref*r_min_pred,lam_pred) # Constant r_plus
     
     return U_hat
 
