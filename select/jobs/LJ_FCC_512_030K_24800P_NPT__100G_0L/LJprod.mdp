@@ -1,0 +1,99 @@
+;Run control
+
+integrator		= md
+
+tinit                    = 0
+dt                       = 0.005
+nsteps		= 40000000
+
+comm-mode                = Linear 
+nstcomm                  = 1
+
+
+;Output control
+
+nstxout                 = 1000 
+nstlog                  = 1000
+nstcalcenergy		= 1
+nstenergy		= 100
+nstxout-compressed	= 10000
+compressed-x-precision	= 1000
+
+
+;Neighbor searching
+
+cutoff-scheme		= Verlet
+nstlist			= 10
+ns_type			= grid
+pbc			= xyz
+verlet-buffer-tolerance	= 0.005
+rlist 			= 0.65
+
+;Electrostatics
+coulombtype		= Cut-off
+coulombmodifier		= None
+rcoulomb 		= 0.65
+
+;VanDerWaals
+vdwtype			= Cut-off
+vdw_modifier		= Potential-shift-Verlet
+rvdw			= 0.65
+rvdw-switch		= 0.63
+DispCorr		= No
+
+;Ewald??
+
+;Temperature coupling
+tcoupl		= v-rescale
+nsttcouple		= 1
+tc-grps			= System
+tau_t			= 2
+ref_t			= 30
+
+
+;Pressure coupling
+pcoupl			= BARO
+;ref_p		= 24800			= 1
+;pcoupltype		= isotropic
+;nstpcouple		= 10
+;tau_p			= 10
+;compressibility	= 3.5e-5
+;refcoord-scaling	= no
+
+;Velocity generation
+gen_vel			= yes
+gen_temp		= 30
+gen_seed		= 12
+
+;Other
+;No constraints
+constraints              = none
+; Type of constraint algorithm = 
+constraint-algorithm     = lincs
+lincs-order              = 12
+lincs-iter               = 4
+
+; FREE ENERGY PARAMETERS
+free_energy              = no
+init_lambda_state        = 0    ;Which lambda are we sampling from?
+delta_lambda             = 0    ;No change in lambda over time
+calc_lambda_neighbors    = -1   ;Calculate all energies and derivatives for use in MBAR
+nstdhdl                  = 0    ;How often do we output the dhdl information
+dhdl-print-energy        = yes  ;Print absolute energies as well as differences in dhdl file
+;Lambda Indicies         =  0    1    2    3    4    5    6    7    8    9   10
+coul-lambdas		 =
+vdw-lambdas		 =
+restraint_lambdas	 =
+couple-lambda0           =
+couple-lambda1           =
+couple-intramol          = 
+couple-moltype           = A
+symmetry-averaging 	= no
+
+
+
+
+
+
+
+
