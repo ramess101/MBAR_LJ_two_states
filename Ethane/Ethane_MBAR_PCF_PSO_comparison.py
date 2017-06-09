@@ -4,6 +4,7 @@ just for the initial model (TraPPE). The TraPPE and Mess-UP models represent
 an example of very good phase space overlap as they are very similar LJ models.
 The Potoff model has very poor phase space overlap having a different value
 of sigma and a repulsive exponent of 16. 
+
 """
 
 import numpy as np
@@ -142,7 +143,7 @@ EA_alt[2] = np.sum(mbar.W_nk[:,2]*U_02)
 
 U_direct = np.zeros(3)
 U_W1 = np.zeros(3)
-U_PCF = np.zeros([3,5])
+U_PCF = np.zeros([3,8])
 dU_direct = np.zeros(3)
 dU_W1 = np.zeros(3)
 
@@ -162,11 +163,15 @@ dU_W1[0] = np.std(U_00)/np.sqrt(len(U_00)-1)
 dU_W1[1] = np.std(U_01)/np.sqrt(len(U_01)-1)
 dU_W1[2] = np.std(U_02)/np.sqrt(len(U_02)-1)
 
-for i in range(0,5): # Loop through the different PCF-PSO methods
+for i in range(0,8): # Loop through the different PCF-PSO methods
     if i == 4:
         U_PCF[0,i] = (U_PCF[0,1] + U_PCF[0,3])/2. # Method 1 is known to underpredict while method 3 is known to over predict, their average is the best estimate
         U_PCF[1,i] = (U_PCF[1,1] + U_PCF[1,3])/2.
         U_PCF[2,i] = (U_PCF[2,1] + U_PCF[2,3])/2.
+    elif i == 7:
+        U_PCF[0,i] = (U_PCF[0,5] + U_PCF[0,6])/2. # Method 5 is known to underpredict while method 6 is known to over predict, their average is the best estimate
+        U_PCF[1,i] = (U_PCF[1,5] + U_PCF[1,6])/2.
+        U_PCF[2,i] = (U_PCF[2,5] + U_PCF[2,6])/2.
     else:
         U_PCF[0,i] = U_hat(eps_0,sig_0,lam_0,i)
         U_PCF[1,i] = U_hat(eps_1,sig_1,lam_1,i)
@@ -180,8 +185,11 @@ for i in range(0,3):
     print "    PCF-PSO, general  =  {:10.3f} ".format(U_PCF[i,0])
     print "    PCF-PSO, scaled  =  {:10.3f} ".format(U_PCF[i,1])
     print "    PCF-PSO, predicted zeroth order  =  {:10.3f} ".format(U_PCF[i,2])
-    print "    PCF-PSO, scaled zeroth order  =  {:10.3f} ".format(U_PCF[i,3])
+    print "    PCF-PSO, scaled, predicted zeroth order  =  {:10.3f} ".format(U_PCF[i,3])
     print "    PCF-PSO, hybrid of scaled methods  =  {:10.3f} ".format(U_PCF[i,4])
+    print "    PCF-PSO, scaled by rmin =  {:10.3f} ".format(U_PCF[i,5])
+    print "    PCF-PSO, scaled by rmin, predicted zeroth order  =  {:10.3f} ".format(U_PCF[i,6])
+    print "    PCF-PSO, hybrid of scaled by rmin methods  =  {:10.3f} ".format(U_PCF[i,7])
 
 # MRS: amusing: find the "amount of weight" that guarantees at least 10%
 # effective samples.  For 2, it's obviously lambda=1 (use MBAR
@@ -236,7 +244,7 @@ for i in range(3):
 #    MBAR estimate for U =   -5522.483 +/-      0.868 vs      0.873
 #    MBAR estimate for U =   -5876.616 +/-      4.604 vs      0.002
 #    MBAR estimate for U =   -5554.139 +/-      0.881 vs      0.889
- 
+
 # Plot the predicted RDF for Potoff
 
 RDF_0_Temp_ref = RDF_0(U_Mie(r,eps_0,sig_0,lam_0),Temp)
@@ -274,3 +282,4 @@ plt.ylabel('PCF')
 plt.xlim([0.4,1.4])
 plt.ylim([0.5,1.5])
 plt.show()
+
