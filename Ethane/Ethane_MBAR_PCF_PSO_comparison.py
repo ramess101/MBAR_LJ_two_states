@@ -247,14 +247,20 @@ for i in range(3):
 
 # Plot the predicted RDF for Potoff
 
+r_min_1 = r_min_calc_Mie(sig_1,lam_1)
+r_min_0 = r_min_calc_Mie(sig_0,lam_0)
+
 RDF_0_Temp_ref = RDF_0(U_Mie(r,eps_0,sig_0,lam_0),Temp)
 RDF_0_Temp = RDF_0(U_Mie(r,eps_1,sig_1,lam_1),Temp)
 RDF_predicted_zeroth = RDF_hat_calc(RDF_ref,RDF_0_Temp_ref,RDF_0_Temp)
 RDF_0_Temp_scaled = RDF_0(U_Mie(r_plus_ref*sig_1,eps_1,sig_1,lam_1),Temp)
 RDF_scaled_predicted_zeroth = RDF_hat_calc(RDF_ref,RDF_0_Temp_ref,RDF_0_Temp_scaled)
+RDF_0_Temp_scaled_rmin = RDF_0(U_Mie(r_plus_ref*sig_0/r_min_0*r_min_1,eps_1,sig_1,lam_1),Temp)
+RDF_scaled_predicted_zeroth_rmin = RDF_hat_calc(RDF_ref,RDF_0_Temp_ref,RDF_0_Temp_scaled_rmin)
 
 plt.plot(r,RDF_predicted_zeroth,label='Predicted Zeroth Potoff')
 plt.plot(r_plus_ref*sig_1,RDF_scaled_predicted_zeroth,label='Scaled Predicted Zeroth Potoff')
+plt.plot(r_plus_ref*sig_0/r_min_0*r_min_1,RDF_scaled_predicted_zeroth,label='Scaled by rmin Predicted Zeroth Potoff')
 plt.plot(r,RDF_ref,label='Reference (TraPPE)')
 plt.plot(r_1,RDF_1,label='Actual Potoff')
 plt.legend()
@@ -264,6 +270,7 @@ plt.show()
 
 plt.plot(r,RDF_predicted_zeroth,label='Predicted Zeroth Potoff')
 plt.plot(r_plus_ref*sig_1,RDF_scaled_predicted_zeroth,label='Scaled Predicted Zeroth Potoff')
+plt.plot(r_plus_ref*sig_0/r_min_0*r_min_1,RDF_scaled_predicted_zeroth,label='Scaled by rmin Predicted Zeroth Potoff')
 plt.plot(r,RDF_ref,label='Reference (TraPPE)')
 plt.plot(r_1,RDF_1,label='Actual Potoff')
 plt.legend()
@@ -274,6 +281,7 @@ plt.show()
 
 plt.plot(r,RDF_predicted_zeroth,label='Predicted Zeroth Potoff')
 plt.plot(r_plus_ref*sig_1,RDF_scaled_predicted_zeroth,label='Scaled Predicted Zeroth Potoff')
+plt.plot(r_plus_ref*sig_0/r_min_0*r_min_1,RDF_scaled_predicted_zeroth,label='Scaled by rmin Predicted Zeroth Potoff')
 plt.plot(r,RDF_ref,label='Reference (TraPPE)')
 plt.plot(r_1,RDF_1,label='Actual Potoff')
 plt.legend()
