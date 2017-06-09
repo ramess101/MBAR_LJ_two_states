@@ -1,0 +1,75 @@
+;Run control
+
+integrator		 = md-vv
+
+tinit                    = 0
+dt                       = 0.01
+nsteps		         = 5000000
+
+comm-mode                = Linear 
+nstcomm                  = 1
+
+
+;Output control
+
+nstxout                 = 2000 
+nstlog                  = 2000
+nstcalcenergy		= 1
+nstenergy		= 200
+
+
+;Neighbor searching
+
+cutoff-scheme		= Verlet
+nstlist			= 10
+ns_type			= grid
+pbc			= xyz
+verlet-buffer-tolerance	= 0.005
+rlist 			= 0.75
+
+;Electrostatics
+coulombtype		= Cut-off
+coulombmodifier		= None
+rcoulomb 		= 0.75
+
+;VanDerWaals
+vdwtype			= Cut-off
+vdw_modifier		= Potential-shift-Verlet
+rvdw			= 0.75
+rvdw-switch		= 0.73
+DispCorr		= EnerPres
+
+;Ewald??
+
+;Temperature coupling
+tcoupl		        = Nose-Hoover
+nh-chain-length          = 2
+print-nose-hoover-chain-variables = no
+nsttcouple		= 1
+tc-grps			= System
+tau_t			= 2
+ref_t			= 30
+
+
+;Pressure coupling
+pcoupl			= MTTK
+ref_p		= 24800			
+pcoupltype		= isotropic
+nstpcouple		= 1
+tau_p			= 10
+compressibility	        = 3.5e-5
+
+;Velocity generation
+gen_vel			= yes
+gen_temp		= 30
+gen_seed		= 12
+
+;No constraints
+constraints              = none
+
+
+
+
+
+
+

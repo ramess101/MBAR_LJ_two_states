@@ -1,0 +1,7 @@
+#include "LJ.itp"
+
+[ system ]
+binary LJ ordered crystal
+
+[ molecules ]
+A        216
